@@ -1,21 +1,27 @@
-import Navbar from "./components/layout/Navbar"
+import Navbar from "./components/layout/Navbar";
+import Footer from "./components/layout/Footer";
+import AppRoutes from "./routes/AppRoutes";
+
 
 function App() {
+
   return (
-    <div className="min-h-screen bg-slate-50">
+
+    <div className="flex min-h-screen flex-col bg-slate-50">
+
       <Navbar />
 
-      <main className="max-w-7xl mx-auto px-6 py-16">
-        <h1 className="text-5xl font-bold text-slate-900">
-          Welcome to Servora
-        </h1>
-
-        <p className="mt-4 text-slate-600 text-lg">
-          Your trusted local services marketplace.
-        </p>
+      <main className="flex-1 pt-20">
+        <AppRoutes />
       </main>
+
+      <Footer />
+
     </div>
-  )
+
+  );
+
 }
 
-export default App
+
+export default App;
