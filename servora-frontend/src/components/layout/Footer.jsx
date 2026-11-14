@@ -225,8 +225,8 @@ function Footer() {
             "
             >
               <FaPhoneAlt className="text-emerald-400" />
-              +233 20 123 4567
-            </div>
+              +233 53 631 2253 
+              +233 59 567 1497           </div>
 
             <div
               className="
