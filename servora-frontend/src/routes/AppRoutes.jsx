@@ -1,4 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
+import { AnimatePresence } from "framer-motion";
+
+import PageTransition from "../components/animations/PageTransition";
 
 // Pages
 import Home from "../pages/Home";
@@ -6,55 +9,72 @@ import Services from "../pages/Services";
 import Providers from "../pages/Providers";
 import About from "../pages/About";
 import Contact from "../pages/Contact";
-
 import Login from "../pages/Login";
 import Register from "../pages/Register";
-
 import Booking from "../pages/Booking";
 import ProviderDetails from "../pages/ProviderDetails";
 
 function AppRoutes() {
+  const location = useLocation();
+
+  const withTransition = (Component) => (
+    <PageTransition>
+      <Component />
+    </PageTransition>
+  );
+
   return (
-    <Routes>
-      {/* Main Pages */}
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        {/* Main Pages */}
+        <Route path="/" element={withTransition(Home)} />
 
-      <Route path="/" element={<Home />} />
+        <Route path="/services" element={withTransition(Services)} />
 
-      <Route path="/services" element={<Services />} />
+        <Route path="/providers" element={withTransition(Providers)} />
 
-      <Route path="/providers" element={<Providers />} />
+        <Route
+          path="/providers/:id"
+          element={withTransition(ProviderDetails)}
+        />
 
-      <Route path="/providers/:id" element={<ProviderDetails />} />
+        <Route path="/about" element={withTransition(About)} />
 
-      <Route path="/about" element={<About />} />
+        <Route path="/contact" element={withTransition(Contact)} />
 
-      <Route path="/contact" element={<Contact />} />
+        {/* Authentication */}
+        <Route path="/login" element={withTransition(Login)} />
 
-      {/* Authentication */}
+        <Route path="/register" element={withTransition(Register)} />
 
-      <Route path="/login" element={<Login />} />
+        {/* Booking */}
+        <Route path="/booking" element={withTransition(Booking)} />
 
-      <Route path="/register" element={<Register />} />
+        {/* 404 */}
+        <Route
+          path="*"
+          element={
+            <PageTransition>
+              <div className="flex min-h-screen items-center justify-center bg-slate-50 px-6">
+                <div className="text-center">
+                  <h1 className="text-7xl font-black text-emerald-600">
+                    404
+                  </h1>
 
-      {/* Booking */}
+                  <p className="mt-4 text-2xl font-semibold text-slate-800">
+                    Oops! Page Not Found
+                  </p>
 
-      <Route path="/booking" element={<Booking />} />
-
-      {/* Future Pages */}
-
-      <Route
-        path="*"
-        element={
-          <div className="flex min-h-screen items-center justify-center bg-slate-50">
-            <div className="text-center">
-              <h1 className="text-6xl font-black text-emerald-600">404</h1>
-
-              <p className="mt-4 text-xl text-slate-600">Page Not Found</p>
-            </div>
-          </div>
-        }
-      />
-    </Routes>
+                  <p className="mt-2 text-slate-500">
+                    The page you're looking for doesn't exist or has been moved.
+                  </p>
+                </div>
+              </div>
+            </PageTransition>
+          }
+        />
+      </Routes>
+    </AnimatePresence>
   );
 }
 
